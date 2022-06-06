@@ -9,7 +9,9 @@ import { UserModule } from './modules/user.module';
 
 @Module({
   imports: [
-    
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', ''),
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'us-cdbr-east-05.cleardb.net',
