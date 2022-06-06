@@ -14,11 +14,11 @@ import { UserModule } from './modules/user.module';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'us-cdbr-east-05.cleardb.net',
       port: 3306,
-      username: 'root',
-      password: 'Term-228687535',
-      database: 'instabio',
+      username: 'bab0221be873bb',
+      password: '9d3334c6',
+      database: 'heroku_cac732070c1797f',
       entities: [
         "dist/**/*.entity{.ts,.js}"
       ],
