@@ -17,7 +17,7 @@ import { UserModule } from './modules/user.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'term228687535',
+      password: 'Term-228687535',
       database: 'instabio',
       entities: [
         "dist/**/*.entity{.ts,.js}"

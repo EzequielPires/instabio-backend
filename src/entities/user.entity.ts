@@ -1,9 +1,10 @@
 import { hashSync } from "bcrypt";
-import { BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { Link } from "./link.entity";
 import { Product } from "./product.entity";
 
 @Entity()
+@Unique(["email", "user_name"])
 export class User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
