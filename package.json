@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/serve-static": "^2.2.2",
     "@nestjs/typeorm": "^8.1.2",
+    "@types/sharp": "^0.30.4",
     "bcrypt": "^5.0.1",
     "mysql2": "^2.3.3",
     "passport": "^0.6.0",
@@ -37,6 +38,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
+    "sharp": "^0.30.6",
     "typeorm": "^0.3.6"
   },
   "devDependencies": {

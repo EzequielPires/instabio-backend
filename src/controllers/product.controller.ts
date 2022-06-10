@@ -4,8 +4,15 @@ import { diskStorage } from 'multer';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { FindProductsQueryDto } from 'src/dtos/find-products-query.dto';
 import { Product } from 'src/entities/product.entity';
+import CustomStorage from 'src/helper/CustomStorage';
 import { editFileName, imageFileFilter } from 'src/helper/EditNameFile';
 import { ProductService } from 'src/services/product.service';
+
+var storage = CustomStorage({
+    destination: function (req, file, cb) {
+      cb(null, './storage/items' + file.originalname)
+    }
+  })
 
 @Controller('products')
 export class ProductController {
@@ -13,10 +20,7 @@ export class ProductController {
 
     @UseGuards(JwtAuthGuard)
     @UseInterceptors(FileInterceptor('file', {
-        storage: diskStorage({
-            destination: './storage/items',
-            filename: editFileName,
-        }),
+        storage: storage,
         fileFilter: imageFileFilter,
     }))
     @Post('')
