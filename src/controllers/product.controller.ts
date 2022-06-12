@@ -4,28 +4,27 @@ import { diskStorage } from 'multer';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { FindProductsQueryDto } from 'src/dtos/find-products-query.dto';
 import { Product } from 'src/entities/product.entity';
-import CustomStorage from 'src/helper/CustomStorage';
+import { compressImage } from 'src/helper/CompressImage';
 import { editFileName, imageFileFilter } from 'src/helper/EditNameFile';
 import { ProductService } from 'src/services/product.service';
 
-var storage = CustomStorage({
-    destination: function (req, file, cb) {
-      cb(null, './storage/items' + file.originalname)
-    }
-  })
 
 @Controller('products')
 export class ProductController {
-    constructor(private readonly service: ProductService) {}
+    constructor(private readonly service: ProductService) { }
 
     @UseGuards(JwtAuthGuard)
-    @UseInterceptors(FileInterceptor('file', {
-        storage: storage,
+    @UseInterceptors(FileInterceptor("file", {
+        storage: diskStorage({
+            destination: './storage/temp',
+            filename: editFileName,
+        }),
         fileFilter: imageFileFilter,
     }))
     @Post('')
-    create(@UploadedFile() file: Express.Multer.File, @Req() req: any) {
-        return this.service.create(file.path, req.user);
+    async create(@UploadedFile() file: Express.Multer.File, @Req() req: any) {
+        const path = await compressImage(file);
+        return await this.service.create(path, req.user);
     }
 
     @Get('')

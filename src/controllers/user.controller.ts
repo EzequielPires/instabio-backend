@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
+import { FindUserQueryDto } from 'src/dtos/find-user-query.dto';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
 
@@ -12,8 +13,8 @@ export class UserController {
     }
 
     @Get('')
-    findAll() {
-        return this.service.findAll();
+    findAll(@Query() queryDto: FindUserQueryDto) {
+        return this.service.findAll(queryDto);
     }
 
     @Get(':id')

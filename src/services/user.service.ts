@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { FindUserQueryDto } from "src/dtos/find-user-query.dto";
 import { User } from "src/entities/user.entity";
 import { UserModel } from "src/models/user.model";
 import { FindOneOptions, Repository } from "typeorm";
@@ -32,12 +33,26 @@ export class UserService {
         }
     }
 
-    async findAll() {
+    async findAll(queryDto: FindUserQueryDto) {
         try {
-            const users = await this.repository.find();
+            queryDto.page = queryDto.page < 1 ? 1 : queryDto.page;
+            queryDto.limit = queryDto.limit > 100 ? 100 : queryDto.limit;
+            const query = this.repository.createQueryBuilder('user');
+            query.leftJoinAndSelect("user.products", "product");
+            query.leftJoinAndSelect("user.profile", "profile");
+            query.leftJoinAndSelect("user.links", "link");
+            query.leftJoinAndSelect("user.social", "social");
+            
+            const {id, user_name} = queryDto;
+
+            {id && query.andWhere('user.id = :id', {id: `${id}`})}
+            {user_name && query.andWhere('user.user_name = :user_name', {user_name: `${user_name}`})}
+
+            const [users, total] = await query.getManyAndCount();
             return {
                 success: true,
-                data: users
+                data: users,
+                total: total
             }
         } catch (error) {
             return {

@@ -2,9 +2,11 @@ import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { StorageController } from './controllers/storage.controller';
 import { AuthModule } from './modules/auth.module';
 import { LinkModule } from './modules/link.module';
 import { ProductModule } from './modules/product.module';
+import { ProfileModule } from './modules/profile.module';
 import { UserModule } from './modules/user.module';
 
 @Module({
@@ -14,11 +16,11 @@ import { UserModule } from './modules/user.module';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'us-cdbr-east-05.cleardb.net',
+      host: 'localhost',
       port: 3306,
-      username: 'bab0221be873bb',
-      password: '9d3334c6',
-      database: 'heroku_cac732070c1797f',
+      username: 'root',
+      password: 'term228687535',
+      database: 'instabio',
       entities: [
         "dist/**/*.entity{.ts,.js}"
       ],
@@ -27,7 +29,8 @@ import { UserModule } from './modules/user.module';
     UserModule,
     AuthModule,
     LinkModule,
-    ProductModule
+    ProductModule,
+    ProfileModule
   ],
   controllers: [],
   providers: [],
