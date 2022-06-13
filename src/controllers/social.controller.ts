@@ -1,12 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Link } from 'src/entities/link.entity';
+import { SocialService } from 'src/services/social.service';
 
-@Controller('')
+@Controller('social')
 export class SocialController {
-    constructor() {}
-
-    @Post('')
-    create(@Body() body) {
-        return 'create'
+    constructor(private readonly service: SocialService) {}
+    
+    @UseGuards(JwtAuthGuard)
+    @Post('add')
+    create(@Body() body: Link, @Req() req: any) {
+        return this.service.create(body, req.user);
     }
 
     @Get('')

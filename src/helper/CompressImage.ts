@@ -13,7 +13,7 @@ export async function compressImage(file: Express.Multer.File) {
         .then(function (metadata) {
             return imageSharpe
                 .resize(metadata.width > 1920 ? 1920 : null)
-                .webp({ quality: 100 })
+                .webp({ quality: 80 })
                 .toFile(__dirname + `/../../storage/${name}.webp`);
         })
         .then(() => {

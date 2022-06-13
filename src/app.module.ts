@@ -7,6 +7,7 @@ import { AuthModule } from './modules/auth.module';
 import { LinkModule } from './modules/link.module';
 import { ProductModule } from './modules/product.module';
 import { ProfileModule } from './modules/profile.module';
+import { SocialModule } from './modules/social.module';
 import { UserModule } from './modules/user.module';
 
 @Module({
@@ -19,7 +20,7 @@ import { UserModule } from './modules/user.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'term228687535',
+      password: 'Term-228687535',
       database: 'instabio',
       entities: [
         "dist/**/*.entity{.ts,.js}"
@@ -30,7 +31,8 @@ import { UserModule } from './modules/user.module';
     AuthModule,
     LinkModule,
     ProductModule,
-    ProfileModule
+    ProfileModule,
+    SocialModule
   ],
   controllers: [],
   providers: [],

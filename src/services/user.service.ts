@@ -42,6 +42,7 @@ export class UserService {
             query.leftJoinAndSelect("user.profile", "profile");
             query.leftJoinAndSelect("user.links", "link");
             query.leftJoinAndSelect("user.social", "social");
+            query.leftJoinAndSelect("social.links", "links");
             
             const {id, user_name} = queryDto;
 

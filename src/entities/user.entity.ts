@@ -25,7 +25,6 @@ export class User {
     profile: Profile;
 
     @OneToOne(() => Social, social => social.user)
-    @JoinColumn()
     social: Social;
 
     @CreateDateColumn({ name: 'created_at' })

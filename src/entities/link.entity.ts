@@ -1,4 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Social } from "./social.entity";
 import { User } from "./user.entity";
 
 @Entity()
@@ -17,4 +18,7 @@ export class Link {
 
     @ManyToOne(() => User, user => user.links, {onDelete: 'CASCADE'})
     user: User;
+
+    @ManyToOne(() => Social, social => social.links, {onDelete: 'CASCADE'})
+    social: Social;
 }

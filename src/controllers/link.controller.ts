@@ -36,7 +36,7 @@ export class LinkController {
 
     @Put(':id')
     update(@Param('id', ParseIntPipe) id: number, @Body() body: Link) {
-        return `update id`
+        return this.service.update(id, body);
     }
 
     @Delete(':id')
