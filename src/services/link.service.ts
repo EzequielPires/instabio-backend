@@ -36,9 +36,9 @@ export class LinkService {
         }
     }
 
-    async findOne() {
+    async findOne(id: number) {
         try {
-
+            
         } catch (error) {
             return {
                 success: false,
@@ -69,9 +69,20 @@ export class LinkService {
         }
     }
 
-    async delete() {
+    async delete(id: number) {
         try {
+            const link = await this.repository.findOne({where: {id}});
 
+            if (!link) {
+                throw new NotFoundException(`Link com o id ${id} não encontrado!`);
+            }
+    
+            await this.repository.delete({ id });
+
+            return {
+                success: true,
+                data: `${link.name} deletado com sucesso!`,
+            }
         } catch (error) {
             return {
                 success: false,
