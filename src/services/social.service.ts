@@ -15,9 +15,9 @@ export class SocialService {
 
     verifyExistLink(links, name) {
         let exist:boolean = false;
-        links.forEach(link => {
+        {links && links.forEach(link => {
             {link.name === name ? exist = true : null}
-        })
+        })}
         return exist;
     }
 

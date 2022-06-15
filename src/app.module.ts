@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
-import { StorageController } from './controllers/storage.controller';
 import { AuthModule } from './modules/auth.module';
 import { LinkModule } from './modules/link.module';
 import { ProductModule } from './modules/product.module';
@@ -20,7 +19,7 @@ import { UserModule } from './modules/user.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'Term-228687535',
+      password: 'term228687535',
       database: 'instabio',
       entities: [
         "dist/**/*.entity{.ts,.js}"
