@@ -7,13 +7,14 @@ import { LinkModule } from './modules/link.module';
 import { ProductModule } from './modules/product.module';
 import { ProfileModule } from './modules/profile.module';
 import { SocialModule } from './modules/social.module';
+import { StorageModule } from './modules/storage.module';
 import { UserModule } from './modules/user.module';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', ''),
-    }),
+    //ServeStaticModule.forRoot({
+    //  rootPath: join(__dirname, '..', ''),
+    //}),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'us-cdbr-east-05.cleardb.net',
@@ -31,7 +32,8 @@ import { UserModule } from './modules/user.module';
     LinkModule,
     ProductModule,
     ProfileModule,
-    SocialModule
+    SocialModule,
+    StorageModule
   ],
   controllers: [],
   providers: [],
