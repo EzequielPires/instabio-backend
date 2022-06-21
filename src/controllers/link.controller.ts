@@ -7,10 +7,12 @@ import {
     ParseIntPipe, 
     Post, 
     Put, 
+    Query, 
     Req, 
     UseGuards 
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { FindLinksQueryDto } from 'src/dtos/find-links-query.dto';
 import { Link } from 'src/entities/link.entity';
 import { LinkService } from 'src/services/link.service';
 
@@ -25,10 +27,9 @@ export class LinkController {
     }
 
     @Get('')
-    findAll() {
-        return this.service.findAll();
+    findAll(@Query() queryDto: FindLinksQueryDto) {
+        return this.service.findAll(queryDto);
     }
-
     @Get(':id')
     findOne(@Param('id', ParseIntPipe) id: number) {
         return `find id`

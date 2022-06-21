@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Link } from "./link.entity";
 import { User } from "./user.entity";
 
 @Entity()
@@ -11,6 +12,10 @@ export class Product {
 
     @Column({default: true})
     state: boolean;
+
+    @OneToOne(() => Link, link => link.product, {onDelete: 'CASCADE'})
+    @JoinColumn()
+    link: Link;
 
     @CreateDateColumn({ name: 'created_at' })
     created_at: Date;

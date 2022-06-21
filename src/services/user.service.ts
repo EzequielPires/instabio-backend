@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindUserQueryDto } from "src/dtos/find-user-query.dto";
+import { Link } from "src/entities/link.entity";
+import { Product } from "src/entities/product.entity";
 import { User } from "src/entities/user.entity";
 import { UserModel } from "src/models/user.model";
 import { FindOneOptions, Repository } from "typeorm";
@@ -10,7 +12,7 @@ export class UserService {
     constructor(@InjectRepository(User) private repository: Repository<User>) { }
 
     isBlank(value: string) {
-        if(!value || value === '') {
+        if (!value || value === '') {
             throw new Error('Valores não podem ser em branco!');
         }
     }
@@ -38,16 +40,25 @@ export class UserService {
             queryDto.page = queryDto.page < 1 ? 1 : queryDto.page;
             queryDto.limit = queryDto.limit > 100 ? 100 : queryDto.limit;
             const query = this.repository.createQueryBuilder('user');
-            query.leftJoinAndSelect("user.products", "product");
+            query.leftJoinAndSelect(
+                "user.products",
+                "product",
+                "product.state = true"
+            );
+            query.leftJoinAndSelect("product.link", "link");
             query.leftJoinAndSelect("user.profile", "profile");
-            query.leftJoinAndSelect("user.links", "link");
+            query.leftJoinAndSelect(
+                "user.links",
+                "links",
+                "links.state = true",
+            );
             query.leftJoinAndSelect("user.social", "social");
-            query.leftJoinAndSelect("social.links", "links");
-            
-            const {id, user_name} = queryDto;
+            query.leftJoinAndSelect("social.links", "links_social");
 
-            {id && query.andWhere('user.id = :id', {id: `${id}`})}
-            {user_name && query.andWhere('user.user_name = :user_name', {user_name: `${user_name}`})}
+            const { id, user_name } = queryDto;
+
+            { id && query.andWhere('user.id = :id', { id: id }) }
+            { user_name && query.andWhere('user.user_name = :user_name', { user_name: user_name }) }
 
             const [users, total] = await query.getManyAndCount();
             return {

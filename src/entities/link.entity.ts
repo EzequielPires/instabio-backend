@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "./product.entity";
 import { Social } from "./social.entity";
 import { User } from "./user.entity";
 
@@ -15,6 +16,9 @@ export class Link {
 
     @Column({default: true})
     state: boolean;
+
+    @OneToOne(() => Product, product => product.link)
+    product: Product;
 
     @ManyToOne(() => User, user => user.links, {onDelete: 'CASCADE'})
     user: User;

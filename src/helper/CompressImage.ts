@@ -1,6 +1,7 @@
 import { readFile, unlink } from 'fs';
 import { promisify } from 'util';
 import * as sharp from 'sharp';
+import { S3Service } from 'src/services/s3.service';
 
 const readFileAsyc = promisify(readFile);
 
@@ -19,8 +20,9 @@ export async function compressImage(file: Express.Multer.File) {
         .then(() => {
             file.path != `storage/${name}.webp` ? unlink(file.path, (err) => {}) : null})
         .catch();
-    
-    
+        const newFile = await readFileAsyc(`storage/${name}.webp`);
+        const teste  = new S3Service();
+        teste.uploadFile(newFile, `${name}.webp`);    
 
     return(`storage/${name}.webp`);
 }

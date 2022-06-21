@@ -1,5 +1,6 @@
 import { NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { FindLinksQueryDto } from "src/dtos/find-links-query.dto";
 import { Link } from "src/entities/link.entity";
 import { Repository } from "typeorm";
 
@@ -21,12 +22,18 @@ export class LinkService {
         }
     }
 
-    async findAll() {
+    async findAll(queryDto: FindLinksQueryDto) {
         try {
-            const links = await this.repository.find({ relations: ['user'] });
+            queryDto.page = queryDto.page < 1 ? 1 : queryDto.page;
+            queryDto.limit = queryDto.limit > 100 ? 100 : queryDto.limit;
+            const query = this.repository.createQueryBuilder('link');
+            const {user} = queryDto;
+            {user && query.where('link.user = :id', {id: user})}
+            const [links, total] = await query.getManyAndCount();
             return {
                 success: true,
-                data: links
+                data: links,
+                total: total
             }
         } catch (error) {
             return {
