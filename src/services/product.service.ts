@@ -137,6 +137,27 @@ export class ProductService {
             }
         }
     }
+    async addWpp(id: number, whatsapp: string) {
+        try {
+            const product = await this.repository.findOne({ where: { id } });
+
+            if (!product) {
+                throw new NotFoundException(`Produto com o id ${id} não encontrado!`);
+            }
+
+            await this.repository.update({id}, {whatsapp});
+
+            return {
+                success: true,
+                message: 'WhatsApp adicionado com sucesso'
+            }
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message,
+            }
+        }
+    }
 
     async toggleState(id: number, state: boolean, user: any) {
         try {

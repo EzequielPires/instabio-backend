@@ -58,6 +58,12 @@ export class ProductController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @Patch('add-wpp/:id')
+    addWpp(@Param('id', ParseIntPipe) id: number, @Body() body: Product, @Req() req: any) {
+        return this.service.addWpp(id, body.whatsapp);
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Patch('state/:id')
     toggleState(@Param('id', ParseIntPipe) id: number, @Body() body: Link, @Req() req: any) {
         return this.service.toggleState(id, body.state, req.user);

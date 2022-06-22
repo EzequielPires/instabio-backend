@@ -10,6 +10,9 @@ export class Product {
     @Column()
     image: string;
 
+    @Column({nullable: true})
+    whatsapp: string;
+
     @Column({default: true})
     state: boolean;
 
