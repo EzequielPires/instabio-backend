@@ -5,6 +5,7 @@ import {
     Get, 
     Param, 
     ParseIntPipe, 
+    Patch, 
     Post, 
     Put, 
     Query, 
@@ -43,5 +44,11 @@ export class LinkController {
     @Delete(':id')
     delete(@Param('id', ParseIntPipe) id: number) {
         return this.service.delete(id);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Patch('state/:id')
+    toggleState(@Param('id', ParseIntPipe) id: number, @Body() body: Link, @Req() req: any) {
+        return this.service.toggleState(id, body.state, req.user);
     }
 }

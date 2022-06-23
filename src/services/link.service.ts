@@ -115,4 +115,25 @@ export class LinkService {
             }
         }
     }
+    async toggleState(id: number, state: boolean, user: any) {
+        try {
+            const link = await this.repository.findOne({where: {id}});
+
+            if (!link) {
+                throw new NotFoundException(`Link com o id ${id} não encontrado!`);
+            }
+    
+            await this.repository.update({ id }, {state});
+
+            return {
+                success: true,
+                message: "Estado alterado com sucesso!",
+            }
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message
+            }
+        }
+    }
 }
