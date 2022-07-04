@@ -9,6 +9,7 @@ import { ProfileModule } from './modules/profile.module';
 import { SocialModule } from './modules/social.module';
 import { StorageModule } from './modules/storage.module';
 import { UserModule } from './modules/user.module';
+import { UserTokensModule } from './modules/user_tokens.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { UserModule } from './modules/user.module';
     ProductModule,
     ProfileModule,
     SocialModule,
-    StorageModule
+    StorageModule,
+    UserTokensModule
   ],
   controllers: [],
   providers: [],

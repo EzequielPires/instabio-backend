@@ -3,6 +3,12 @@ import { FindUserQueryDto } from 'src/dtos/find-user-query.dto';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
 
+interface ResetPasswordRequest {
+    token: string,
+    password: string,
+    repeat_password: string 
+}
+
 @Controller('users')
 export class UserController {
     constructor(private readonly service: UserService) {}
@@ -31,4 +37,15 @@ export class UserController {
     delete(@Param('id', ParseUUIDPipe) id: string) {
         return this.service.delete(id);
     }
+
+    @Post('forgot-password')
+    forgotPassword(@Body() body) {
+        return this.service.sendForgotPassword(body.email);
+    }
+
+    @Post('reset-password')
+    resetPassword(@Body() body: ResetPasswordRequest) {
+        return this.service.resetPassword(body.token, body.password, body.repeat_password);
+    }
+
 }

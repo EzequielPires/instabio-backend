@@ -1,9 +1,10 @@
 import { hashSync } from "bcrypt";
-import { BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { Link } from "./link.entity";
 import { Product } from "./product.entity";
 import { Profile } from "./profile.entity";
 import { Social } from "./social.entity";
+import { UserTokens } from "./user_tokens.entity";
 
 @Entity()
 @Unique(["email", "user_name"])
@@ -39,7 +40,11 @@ export class User {
     @OneToMany(() => Product, product => product.user)
     products: Product[];
 
+    @OneToMany(() => UserTokens, user_tokens => user_tokens.user)
+    tokens: UserTokens[];
+
     @BeforeInsert()
+    @BeforeUpdate()
     hashPassword() {
       this.password = hashSync(this.password, 10);
     }

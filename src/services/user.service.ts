@@ -1,15 +1,21 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindUserQueryDto } from "src/dtos/find-user-query.dto";
-import { Link } from "src/entities/link.entity";
-import { Product } from "src/entities/product.entity";
 import { User } from "src/entities/user.entity";
 import { UserModel } from "src/models/user.model";
-import { FindOneOptions, Repository } from "typeorm";
+import { Repository } from "typeorm";
+import { v4 as uuidV4 } from "uuid";
+import { addHours } from "src/helper/DateHelpers";
+import { NodemailerService } from "./nodemailer.service";
+import { UserTokensService } from "./user_tokens.service";
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(User) private repository: Repository<User>) { }
+    constructor(
+        @InjectRepository(User) private repository: Repository<User>,
+        private nodemailerService: NodemailerService,
+        private userTokenService: UserTokensService,
+    ) { }
 
     isBlank(value: string) {
         if (!value || value === '') {
@@ -128,6 +134,89 @@ export class UserService {
             return user;
         } catch (error) {
             throw new NotFoundException(error.message);
+        }
+    }
+
+    async findByEmail(email: string) {
+        try {
+            const user = await this.repository.findOneOrFail({
+                where: { email }
+            });
+            return user;
+        } catch (error) {
+            throw new NotFoundException(error.message);
+        }
+    }
+
+    async sendForgotPassword(email: string) {
+        try {
+            const user = await this.findByEmail(email);
+
+            if (!user) {
+                throw new Error("Usuário com esse email não existe!");
+            }
+
+            const refresh_token = uuidV4();
+
+            const expires_date = addHours(3);
+
+            const userToken = await this.userTokenService.create({
+                expires_date,
+                refresh_token,
+                user
+            });
+
+            const messageOptions = {
+                email: 'ezequiel.pires082000@gmail.com',
+                token: refresh_token,
+                title: 'Teste de email',
+                body: `<a href='http://localhost:3000/login?token=${refresh_token}&user=${user.id}'>Reset password</a>`
+            }
+
+            
+            const response = await this.nodemailerService.sendEmail(messageOptions);
+            if(!response.success) {
+                throw new Error("Falha ao enviar email com recuperação de senha.")
+            }
+
+            return {
+                success: true,
+                message: "Email com recuperação de senha enviado com sucesso.",
+                data: userToken
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message
+            }
+        }
+    }
+
+    async resetPassword(token: string, password: string, repeat_password: string) {
+        try {
+            const {isValid, user} = await this.userTokenService.isValid(token);
+            if(!isValid) {
+                throw new Error("Token de recuperação de senha inválido.");
+            }
+            if(password != repeat_password) {
+                throw new Error("As senhas devem ser iguais.");
+            }
+
+            user.password = password;
+
+            await this.repository.save(user);
+
+            await this.userTokenService.delete(token);
+
+            return {
+                success: true,
+                message: "Senha alterada com sucesso!"
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message 
+            }
         }
     }
 }
