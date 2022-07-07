@@ -1,3 +1,4 @@
+import { Response } from "express";
 import { CreatePriceStripeDTO } from "src/dtos/create-price-stripe.dto";
 
 const stripe = require('stripe')('sk_test_51JaiytFBvwMjiYE2JiSd26lbTkVXLEttaOhrrs63BTioVfZMl2mmyNDkeznKdUiL9W0qFqDHEQXSNpgZo3mWOgSH002GRGaisL');
@@ -49,7 +50,7 @@ export class PlanService {
             );
             return {
                 success: true,
-                deleted 
+                deleted
             }
         } catch (error) {
             return {
@@ -80,11 +81,11 @@ export class PlanService {
         try {
             const prices = await stripe.prices.list({
                 limit: 3
-            })  
+            })
             return {
                 success: true,
                 data: prices.data,
-            }          
+            }
         } catch (error) {
             return {
                 success: false,
@@ -92,29 +93,25 @@ export class PlanService {
             }
         }
     }
-    
+
     async createCheckoutSession(id: string) {
-        const prices = await stripe.prices.list({
-            expand: ['data.product'],
-          });
-          const session = await stripe.checkout.sessions.create({
+        const session = await stripe.checkout.sessions.create({
             billing_address_collection: 'auto',
             line_items: [
-              {
-                price: "price_1LIFKiFBvwMjiYE2YIPNLivm",
-                // For metered billing, do not pass quantity
-                quantity: 1,
-        
-              },
+                {
+                    price: "price_1LIFddFBvwMjiYE2EA5Deraz",
+                    quantity: 1,
+
+                },
             ],
             mode: 'subscription',
             success_url: `http://localhost:3001/?success=true&session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `http://localhost:3001?canceled=true`,
-          });
-        
-          return {
+        });
+
+        return {
             url: session.url
-          } 
+        };
     }
 
 }

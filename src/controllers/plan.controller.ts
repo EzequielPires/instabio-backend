@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Res } from "@nestjs/common";
+import { Response } from "express";
 import { CreatePriceStripeDTO } from "src/dtos/create-price-stripe.dto";
 import { PlanService } from "src/services/plan.service";
 
@@ -34,8 +35,7 @@ export class PlanController {
     }
     
     @Post('create-checkout-session')
-    async createCheckoutSession(@Body() body, @Res() res){
-        const {url} = await this.service.createCheckoutSession(body.id);
-        return res.redirect(url);
+    createCheckoutSession(@Body() body){
+        return this.service.createCheckoutSession(body.id); 
     }
 }
