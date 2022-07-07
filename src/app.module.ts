@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AuthModule } from './modules/auth.module';
 import { LinkModule } from './modules/link.module';
+import { PlanModule } from './modules/plan.module';
 import { ProductModule } from './modules/product.module';
 import { ProfileModule } from './modules/profile.module';
 import { SocialModule } from './modules/social.module';
@@ -35,7 +36,8 @@ import { UserTokensModule } from './modules/user_tokens.module';
     ProfileModule,
     SocialModule,
     StorageModule,
-    UserTokensModule
+    UserTokensModule,
+    PlanModule
   ],
   controllers: [],
   providers: [],

@@ -170,7 +170,7 @@ export class UserService {
                 email: 'ezequiel.pires082000@gmail.com',
                 token: refresh_token,
                 title: 'Teste de email',
-                body: `<a href='http://localhost:3000/login?token=${refresh_token}&user=${user.id}'>Reset password</a>`
+                body: `<a href='http://localhost:3001/reset-password?token=${refresh_token}&user=${user.id}'>Reset password</a>`
             }
 
             
