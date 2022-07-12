@@ -22,8 +22,6 @@ export class UserController {
         return this.service.create(body);
     }
 
-    /* @Roles(Role.Pro)
-    @UseGuards(JwtAuthGuard, RolesGuard) */
     @Get('')
     findAll(@Query() queryDto: FindUserQueryDto) {
         return this.service.findAll(queryDto);
