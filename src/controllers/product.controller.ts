@@ -2,11 +2,14 @@ import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Q
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { RolesGuard } from 'src/auth/roles.guard';
 import { FindProductsQueryDto } from 'src/dtos/find-products-query.dto';
 import { Link } from 'src/entities/link.entity';
 import { Product } from 'src/entities/product.entity';
 import { compressImage } from 'src/helper/CompressImage';
 import { editFileName, imageFileFilter } from 'src/helper/EditNameFile';
+import { Role } from 'src/models/role.enum';
 import { LinkService } from 'src/services/link.service';
 import { ProductService } from 'src/services/product.service';
 
@@ -17,7 +20,8 @@ export class ProductController {
         private readonly service: ProductService,
     ) { }
 
-    @UseGuards(JwtAuthGuard)
+    @Roles(Role.Pro)
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @UseInterceptors(FileInterceptor("file", {
         storage: diskStorage({
             destination: './storage/temp',

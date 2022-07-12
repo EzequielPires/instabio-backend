@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { RolesGuard } from './auth/roles.guard';
 import { AuthModule } from './modules/auth.module';
 import { LinkModule } from './modules/link.module';
 import { PlanModule } from './modules/plan.module';
@@ -40,6 +41,6 @@ import { UserTokensModule } from './modules/user_tokens.module';
     PlanModule
   ],
   controllers: [],
-  providers: [],
+  providers: [RolesGuard],
 })
 export class AppModule { }
