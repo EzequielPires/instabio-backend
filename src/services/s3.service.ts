@@ -39,6 +39,6 @@ export class S3Service {
             Key: fileKKey,
             Bucket: this.AWS_S3_BUCKET
         }
-        return this.s3.getObject(downloadParams).createReadStream()
+        return this.s3.getObject(downloadParams).createReadStream();
     } 
 }
