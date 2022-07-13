@@ -24,6 +24,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/serve-static": "^2.2.2",
     "@nestjs/typeorm": "^8.1.2",
+    "aws-sdk": "^2.1158.0",
     "bcrypt": "^5.0.1",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.6",

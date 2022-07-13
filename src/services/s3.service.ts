@@ -1,9 +1,9 @@
 import { Injectable, Req, Res } from '@nestjs/common';
-//import * as AWS from "aws-sdk";
+import * as AWS from "aws-sdk";
 
 @Injectable()
 export class S3Service {
-    /* AWS_S3_BUCKET = "instabio-storage";
+    AWS_S3_BUCKET = "instabio-storage";
     s3 = new AWS.S3
         ({
             accessKeyId: "AKIAVFCGY7T7IYXSCE7U",
@@ -40,5 +40,5 @@ export class S3Service {
             Bucket: this.AWS_S3_BUCKET
         }
         return this.s3.getObject(downloadParams).createReadStream();
-    }  */
+    } 
 }

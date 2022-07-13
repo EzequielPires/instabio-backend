@@ -1,9 +1,5 @@
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { Roles } from 'src/auth/roles.decorator';
-import { RolesGuard } from 'src/auth/roles.guard';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
 import { FindUserQueryDto } from 'src/dtos/find-user-query.dto';
-import { Role } from 'src/models/role.enum';
 import { UserModel } from 'src/models/user.model';
 import { UserService } from 'src/services/user.service';
 
