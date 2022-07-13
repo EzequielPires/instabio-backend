@@ -6,13 +6,13 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf --max-old-space-size=4076 dist",
+    "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node --max-old-space-size=4076 dist/main",
+    "start:prod": "node --max-old-space-size=4096 dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "deploy": "npm ci && npm run build && npm run start:prod"
   },
