@@ -20,10 +20,10 @@ export async function compressImage(file: Express.Multer.File) {
         .then(() => {
             file.path != `storage/${name}.webp` ? unlink(file.path, (err) => {}) : null})
         .catch();
-        const newFile = await readFileAsyc(`storage/${name}.webp`);
-        const service  = new S3Service();
-        const key = await service.uploadFile(newFile, `${name}.webp`);
+        //const newFile = await readFileAsyc(`storage/${name}.webp`);
+        //const service  = new S3Service();
+        //const key = await service.uploadFile(newFile, `${name}.webp`);
         //unlink(file.path, (err) => {});    
         
-    return `storage/${key}`  ?? `storage/${name}.webp`;
+    return `storage/${name}`  ?? `storage/${name}.webp`;
 }

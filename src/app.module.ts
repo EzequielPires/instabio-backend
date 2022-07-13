@@ -15,9 +15,9 @@ import { UserTokensModule } from './modules/user_tokens.module';
 
 @Module({
   imports: [
-    //ServeStaticModule.forRoot({
-    //  rootPath: join(__dirname, '..', ''),
-    //}),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', ''),
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'us-cdbr-east-05.cleardb.net',

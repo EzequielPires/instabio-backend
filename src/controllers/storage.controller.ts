@@ -6,7 +6,7 @@ export class StorageController {
     constructor(private readonly s3Service: S3Service) {}
     @Get(':key')
     view(@Param('key') key: string, @Res() res: any) {
-        const readStream = this.s3Service.getFileStream(key);
-        return readStream.pipe(res);
+        /* const readStream = this.s3Service.getFileStream(key);
+        return readStream.pipe(res); */
     }
 }
