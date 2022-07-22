@@ -105,13 +105,22 @@ export class PlanService {
                 },
             ],
             mode: 'subscription',
-            success_url: `http://localhost:3001/?success=true&session_id={CHECKOUT_SESSION_ID}`,
+            success_url: `http://localhost:3001/payment-success?success=true&session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `http://localhost:3001?canceled=true`,
         });
 
         return {
             url: session.url
         };
+    }
+
+    /* Subscription */
+
+    async findOneSubscription() {
+        try {
+        } catch (error) {
+
+        }
     }
 
 }
